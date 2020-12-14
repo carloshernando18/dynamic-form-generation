@@ -1,0 +1,13 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(model)">
+  <mat-card>
+    <mat-card-title>Proeperty</mat-card-title>
+    <mat-card-subtitle>Create or Edit properties</mat-card-subtitle>
+    <mat-card-content>
+      <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a style="margin-right: 5px;" mat-raised-button color="warn" [routerLink]="['/', 'properties']">Cancelar</a>
+      <button type="submit" mat-raised-button color="primary" [disabled]="form.invalid">Guardar</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
