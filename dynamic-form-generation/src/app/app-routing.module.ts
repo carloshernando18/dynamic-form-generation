@@ -8,10 +8,14 @@ const routes: Routes = [
     loadChildren: () => import('./property/property.module').then((module) => module.PropertyModule)
   },
   {
+    path: 'persons',
+    loadChildren: () => import('./person/person.module').then((module) => module.PersonModule)
+  },
+  {
     path: '',
-    redirectTo: 'properties/form',
+    redirectTo: 'persons/form',
     pathMatch: 'full'
-  }
+  },
 ];
 
 @NgModule({

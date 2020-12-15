@@ -1,7 +1,5 @@
 package com.dynamicformgeneration.models;
 
-import java.util.Date;
-
 import javax.validation.constraints.NotNull;
 
 
@@ -23,6 +21,10 @@ public class PropertyModel {
 	private Integer maxLength;
 	
 	private String pattern;
+	
+	private String options;
+	
+	private String placeholder;
 
 	public Integer getId() {
 		return id;
@@ -78,6 +80,22 @@ public class PropertyModel {
 
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public String getPlaceholder() {
+		return placeholder;
+	}
+
+	public void setPlaceholder(String placeholder) {
+		this.placeholder = placeholder;
 	}
 	
 

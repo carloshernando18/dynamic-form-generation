@@ -1,56 +1,39 @@
 package com.dynamicformgeneration.entities;
 
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "User", schema = "public", uniqueConstraints = { @UniqueConstraint(columnNames = "username"), })
-public class User {
-
+@Table(name= "Person", schema="public")
+public class Person {
+	
 	@Id
 	@GeneratedValue()
 	private Integer id;
-
-	@Column(nullable = false)
-	private String username;
-
-	@Column(nullable = false)
-	private String password;
-
-	@Column(nullable = false)
+	
+	@Column
 	private Date createdDate;
-
-	@Column(nullable = false)
+	
+	@Column
 	private Date modifiedDate;
 
+	@OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true) 
+	private List<PersonValue> personValues;
+	
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Date getCreatedDate() {
@@ -67,6 +50,14 @@ public class User {
 
 	public void setModifiedDate(Date modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+
+	public List<PersonValue> getPersonValues() {
+		return personValues;
+	}
+
+	public void setPersonValues(List<PersonValue> personValues) {
+		this.personValues = personValues;
 	}
 
 }

@@ -7,6 +7,8 @@ export interface Property {
   maxLength: number;
   pattern: string;
   required: boolean;
+  options: string;
+  placeholder: string;
 
 }
 

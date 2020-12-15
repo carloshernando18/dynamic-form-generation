@@ -35,6 +35,12 @@ public class Property {
 	private String pattern;
 	
 	@Column
+	private String options;
+
+	@Column
+	private String placeholder;
+	
+	@Column
 	private Date createdDate;
 	
 	@Column
@@ -94,6 +100,22 @@ public class Property {
 
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
+	}
+
+	public String getOptions() {
+		return options;
+	}
+
+	public void setOptions(String options) {
+		this.options = options;
+	}
+
+	public String getPlaceholder() {
+		return placeholder;
+	}
+
+	public void setPlaceholder(String placeholder) {
+		this.placeholder = placeholder;
 	}
 
 	public Date getCreatedDate() {

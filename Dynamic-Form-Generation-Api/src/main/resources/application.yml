@@ -10,4 +10,13 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+      
+#logging:
+#  level:
+#    org.springframework: debug
 
+app:
+  jwtSecret: secretKey
+  jwtExpirationMs: 86400000
+  
+  

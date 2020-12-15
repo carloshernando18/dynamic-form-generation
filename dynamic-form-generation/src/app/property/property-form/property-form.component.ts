@@ -15,12 +15,14 @@ export class PropertyFormComponent implements OnInit {
   form = new FormGroup({});
   model = {
     id: 0,
-    name: "",
+    name: '',
     typeProperty: null,
     orderProperty: 0,
     maxLength: null,
     pattern: null,
     required: false,
+    options: '',
+    placeholder: '',
   };
   fields: FormlyFieldConfig[] = [
     {
@@ -92,6 +94,16 @@ export class PropertyFormComponent implements OnInit {
         label: "Patrón de validación",
         placeholder: "Patrón de validación de la propiedad",
       },
+      hideExpression: "model.typeProperty == 'select'",
+    },
+    {
+      key: "options",
+      type: "input",
+      templateOptions: {
+        label: "opciones",
+        placeholder: "Escriba los valores de la lista seprados por comas (,) Ej: ítem_1, ítem_2",
+      },
+      hideExpression: "model.typeProperty != 'select'",
     },
     {
       key: "required",

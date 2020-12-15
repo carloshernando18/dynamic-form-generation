@@ -17,6 +17,8 @@ public class PropertyConverter {
 		obj.setMaxLength(model.getMaxLength());
 		obj.setPattern(model.getPattern());
 		obj.setRequired(model.isRequired());
+		obj.setOptions(model.getOptions());
+		obj.setPlaceholder(model.getPlaceholder());
 		return obj;
 	}
 	
@@ -29,6 +31,8 @@ public class PropertyConverter {
 		model.setMaxLength(property.getMaxLength());
 		model.setPattern(property.getPattern());
 		model.setRequired(property.isRequired());
+		model.setOptions(property.getOptions());
+		model.setPlaceholder(property.getPlaceholder());
 		return model;
 	}
 	

@@ -69,6 +69,8 @@ public class PropertyService implements IPropertyService{
 			propertyEntity.setTypeProperty(property.getTypeProperty());
 			propertyEntity.setPattern(property.getPattern());
 			propertyEntity.setRequired(property.isRequired());
+			propertyEntity.setOptions(property.getOptions());
+			propertyEntity.setPlaceholder(property.getPlaceholder());
 			property = PropertyConverter.toPropertyModel(propertyRepository.save(propertyEntity));
 		} else {
 			throw new  NotFoundException("No encontrado");
@@ -84,6 +86,16 @@ public class PropertyService implements IPropertyService{
 			throw new NotFoundException("No encontrado.");
 		}
 		return PropertyConverter.toPropertyModel(entity.get());
+	}
+
+	@Override
+	public List<PropertyModel> getAll() {
+		List<Property> properties = propertyRepository.getProperties();
+		List<PropertyModel> propertiesModel =  new ArrayList<>();
+		for (Property property : properties) {
+			propertiesModel.add(PropertyConverter.toPropertyModel(property));
+		}
+		return propertiesModel;
 	}
 	
 }

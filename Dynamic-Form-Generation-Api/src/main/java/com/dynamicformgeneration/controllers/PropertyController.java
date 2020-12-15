@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,13 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dynamicformgeneration.entities.Property;
 import com.dynamicformgeneration.models.PageableModel;
 import com.dynamicformgeneration.models.PropertyModel;
 import com.dynamicformgeneration.services.IPropertyService;
 
 import javassist.NotFoundException;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("api/v1/properties")
 public class PropertyController {
@@ -31,14 +32,14 @@ public class PropertyController {
 	public PropertyController(IPropertyService propertyService) {
 		this.propertyService = propertyService;
 	}
-	
-	// Get All Properties
+
+	// Get By Id
 	@GetMapping("/{id}")
 	public ResponseEntity<PropertyModel> getById(@PathVariable("id") int id) throws NotFoundException {
 		return new ResponseEntity<>(propertyService.getById(id), HttpStatus.OK);
 	}
-	
-	// Get By Id
+
+	// Get All Properties
 	@GetMapping
 	public ResponseEntity<PageableModel> getAllProperties(Pageable pageable, String filter) {
 		return new ResponseEntity<>(propertyService.getAll(pageable, filter), HttpStatus.OK);
@@ -54,5 +55,10 @@ public class PropertyController {
 	@PutMapping("/{id}")
 	public ResponseEntity<PropertyModel> updateProperty(@PathVariable("id") int id, @RequestBody PropertyModel property) throws NotFoundException {
 		return new ResponseEntity<>(propertyService.update(id, property), HttpStatus.OK);
+	}
+	
+	@GetMapping("/order")
+	public ResponseEntity<List<PropertyModel>> getAll() {
+		return new ResponseEntity<>(propertyService.getAll(), HttpStatus.OK);
 	}
 }

@@ -32,4 +32,8 @@ export class PropertyService {
   update(property: Property) {
     return this.http.put(`${this.propertyUrl}/${property.id}`, property);
   }
+
+  getAllOrder() {
+    return this.http.get<Property[]>(`${this.propertyUrl}/order`);
+  }
 }
