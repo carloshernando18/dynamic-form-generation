@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.dynamicformgeneration.config.JwtUtils;
@@ -24,12 +25,14 @@ public class UserService implements IUserService {
 	private final IUserRepository userRepository;
 	private final AuthenticationManager authenticationManager;
 	private final JwtUtils jwtUtils;
+	private final PasswordEncoder passwordEncoder;
 
 	@Autowired
-	public UserService(IUserRepository userRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+	public UserService(IUserRepository userRepository, AuthenticationManager authenticationManager, JwtUtils jwtUtils, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.authenticationManager = authenticationManager;
 		this.jwtUtils = jwtUtils;
+		this.passwordEncoder = passwordEncoder;		
 	}
 
 	@Override
@@ -37,7 +40,7 @@ public class UserService implements IUserService {
 		User user = new User();
 		user.setCreatedDate(new Date());
 		user.setModifiedDate(new Date());
-		user.setPassword(model.getPassword());
+		user.setPassword(passwordEncoder.encode(model.getPassword()));
 		user.setUsername(model.getUsername());
 		user = userRepository.save(user);
 		return null;

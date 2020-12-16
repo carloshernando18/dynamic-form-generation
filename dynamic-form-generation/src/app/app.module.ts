@@ -1,32 +1,37 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormlyModule } from '@ngx-formly/core';
-import { FormlyMaterialModule } from '@ngx-formly/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { MaterialModule } from './material.module';
+import { DatePickerComponent } from './util/datepicker.type';
+import { TokenInterceptor } from './util/token.interceptor';
 
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent, HomeComponent, DatePickerComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    FormlyModule.forRoot({ extras: { lazyRender: true } }),
-    FormlyMaterialModule,
+    FormlyModule.forRoot({
+      extras: { lazyRender: true }, types: [
+        { name: 'datepicker', component: DatePickerComponent }
+      ]
+    }),
     HttpClientModule,
-    MatToolbarModule,
-    MatIconModule,
+    MaterialModule,
+    FlexLayoutModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

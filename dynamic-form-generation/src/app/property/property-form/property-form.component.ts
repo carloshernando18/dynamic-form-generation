@@ -86,6 +86,7 @@ export class PropertyFormComponent implements OnInit {
         label: "Longitud máxima",
         placeholder: "Longitud máxima de la propiedad",
       },
+      hideExpression: "model.typeProperty != 'input'",
     },
     {
       key: "pattern",
@@ -94,7 +95,7 @@ export class PropertyFormComponent implements OnInit {
         label: "Patrón de validación",
         placeholder: "Patrón de validación de la propiedad",
       },
-      hideExpression: "model.typeProperty == 'select'",
+      hideExpression: "model.typeProperty != 'input'",
     },
     {
       key: "options",
@@ -103,7 +104,7 @@ export class PropertyFormComponent implements OnInit {
         label: "opciones",
         placeholder: "Escriba los valores de la lista seprados por comas (,) Ej: ítem_1, ítem_2",
       },
-      hideExpression: "model.typeProperty != 'select'",
+      hideExpression: "model.typeProperty != 'select' && model.typeProperty != 'radio'",
     },
     {
       key: "required",
