@@ -5,32 +5,33 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dynamicformgeneration.entities.Person;
 import com.dynamicformgeneration.entities.PersonValue;
 import com.dynamicformgeneration.models.PageableModel;
-import com.dynamicformgeneration.models.PersonModel;
+import com.dynamicformgeneration.models.PersonListModel;
 import com.dynamicformgeneration.models.PersonValueModel;
 import com.dynamicformgeneration.repository.IPersonRepository;
 import com.dynamicformgeneration.repository.IPersonValueRepository;
 import com.dynamicformgeneration.services.IPersonService;
+import com.dynamicformgeneration.util.Util;
 
 import javassist.NotFoundException;
 
 @Service
-public class PersonService implements IPersonService{
+public class PersonService implements IPersonService {
 
 	private final IPersonRepository personRepository;
 	private final IPersonValueRepository personValueRepository;
-	
+
 	@Autowired
 	public PersonService(IPersonRepository personRepository, IPersonValueRepository personValueRepository) {
 		this.personRepository = personRepository;
 		this.personValueRepository = personValueRepository;
 	}
-
 
 	@Override
 	public List<PersonValueModel> create(List<PersonValueModel> values) {
@@ -38,7 +39,6 @@ public class PersonService implements IPersonService{
 		person.setCreatedDate(new Date());
 		person.setModifiedDate(new Date());
 		person = this.personRepository.save(person);
-		
 		List<PersonValue> PersonValues = new ArrayList<>();
 		for (PersonValueModel personValueModel : values) {
 			PersonValue value = new PersonValue();
@@ -50,17 +50,31 @@ public class PersonService implements IPersonService{
 			PersonValues.add(value);
 		}
 		personValueRepository.saveAll(PersonValues);
-		
 		return values;
 	}
 
-
 	@Override
 	public PageableModel getAll(Pageable pageable, String filter) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		if (Util.isEmpty(filter)) {
+			filter = "%%";
+		} else {
+			filter = "%" + filter + "%";
+		}
+		final PageableModel model = new PageableModel();
+		final Page<Object[]> persons = personRepository.findAllPagination(pageable, filter);
 
+		final List<PersonListModel> personsModol = new ArrayList<>();
+		for (final Object[] obj : persons) {
+			final PersonListModel person = new PersonListModel();
+			person.setId(Integer.valueOf(obj[0].toString()));
+			person.setName(obj[1] == null || Util.isEmpty(obj[1].toString()) ? "" : obj[1].toString());
+			person.setDate(obj[2] == null || Util.isEmpty(obj[2].toString()) ? "" : obj[2].toString());
+			personsModol.add(person);
+		}
+		model.setItems(personsModol);
+		model.setTotalRows(persons.getTotalElements());
+		return model;
+	}
 
 	@Override
 	public List<PersonValueModel> getByPersonId(int personId) throws NotFoundException {
@@ -75,5 +89,5 @@ public class PersonService implements IPersonService{
 		}
 		return values;
 	}
-	
+
 }

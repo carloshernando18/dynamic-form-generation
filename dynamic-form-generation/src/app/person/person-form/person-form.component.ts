@@ -102,7 +102,7 @@ export class PersonFormComponent implements OnInit, AfterViewInit {
       this.snackBar.open("Persona guardada satisfactoriamente.", null, {
         duration: 2000,
       });
-      this.router.navigate(["/", "properties"]);
+      this.router.navigate(["/", "persons"]);
     });
   }
 }

@@ -15,11 +15,12 @@ import { FormlyModule } from '@ngx-formly/core';
 import { FormlyMaterialModule } from '@ngx-formly/material';
 import { PersonFormComponent } from './person-form/person-form.component';
 import { PersonRoutingModule } from './person-routing.module';
+import { PersonListComponent } from './person-list/person-list.component';
 
 
 
 @NgModule({
-  declarations: [PersonFormComponent],
+  declarations: [PersonFormComponent, PersonListComponent],
   imports: [
     CommonModule,
     PersonRoutingModule,

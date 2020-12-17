@@ -2,6 +2,7 @@ package com.dynamicformgeneration.controllers;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dynamicformgeneration.models.PageableModel;
 import com.dynamicformgeneration.models.PersonValueModel;
 import com.dynamicformgeneration.services.IPersonService;
 
@@ -26,6 +28,12 @@ public class PersonController {
 	
 	public PersonController(IPersonService personService) {
 		this.personService = personService;
+	}
+
+	// Get All Properties
+	@GetMapping
+	public ResponseEntity<PageableModel> getAllProperties(Pageable pageable, String filter) {
+		return new ResponseEntity<>(personService.getAll(pageable, filter), HttpStatus.OK);
 	}
 	
 	// Create Property
